@@ -5,5 +5,5 @@ pathlib2; python_version < "3"
 pyyaml
 
 # Microchip packages
-pyedbglib>=2.21
+pyedbglib>=2.20
 pymcuprog>=3.13.7

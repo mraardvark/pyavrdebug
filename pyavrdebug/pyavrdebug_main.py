@@ -338,12 +338,17 @@ def pyavrdebug(args):
     # Use pymcuprog backend for initial connection here
     backend = Backend()
     toolconnection = _setup_tool_connection(args)
-    backend.connect_to_tool(toolconnection)
+    device = None
 
-    # Read device name from kit, but allow override
-    device = backend.read_kit_device()
-    if args.device:
-        device = args.device
+    try:
+        backend.connect_to_tool(toolconnection)
+
+        # Read device name from kit, but allow override
+        device = backend.read_kit_device()
+        if args.device:
+            device = args.device
+    finally:
+        backend.disconnect_from_tool()
 
     transport = hid_transport()
     transport.connect(serial_number=toolconnection.serialnumber, product=toolconnection.tool_name)
